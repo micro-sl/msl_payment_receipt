@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- QWeb Reports -->
+
+    <record id="msl_action_report_payment_receipt" model="ir.actions.report">
+        <field name="name">Arabic Payment Receipt</field>
+        <field name="model">account.payment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >msl_payment_receipt.report_payment_receipt</field>
+        <field
+            name="report_file"
+        >msl_payment_receipt.report_payment_receipt</field>
+
+        <field
+            name="paperformat_id"
+            ref="msl_payment_receipt.paperformat_A5_landscape"
+        />
+
+        <field name="binding_model_id" ref="account.model_account_payment" />
+        <field name="binding_type">report</field>
+    </record>
+
+
+</odoo>
