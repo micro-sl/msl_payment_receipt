@@ -4,233 +4,234 @@
     <template id="report_payment_receipt_document">
     <t t-call="web.external_layout">
         <t t-foreach="docs" t-as="o">
-        <t t-set="o" t-value="o.with_context(lang=lang)" />
-        <t t-set="o_sec" t-value="o.with_context(lang='ar_001')"/>
+            <div class="page">
+            <div class="row">
 
-<div class="page" >
-<div class="row">
-<!-- row -->
-<div class="row">
-    <div class="col-3">
-        <center>
-            <img src='/web/binary/company_logo' class="float-right" style="max-height: 65px; margin-top:20px;"
-                    alt="Logo"/>
-        </center>
-        <br />
-    </div>
-    <div class="col-6"> 
-    </div> 
-    <div class="col-3">   
-        <center>
-        <strong>     
-            <span t-field="res_company.partner_id"
-                    t-options='{"widget": "contact", "fields": ["name","address"], "no_marker": true}'/>
-        <br />
-        </strong>
-        </center> 
-    </div>           
-</div>
+            <table width="100%" style="margin-top: 5px;border-width: 0;">
+              <tr>
+                <td width="30%" style="border-width: 0;">
+                  <center>
+                      <img src='/web/binary/company_logo' class="float-right" style="max-height: 80px; margin-top:5px;"
+                              alt="Logo"/>
+                  </center>                        
+         
+                </td>
+                <td width="40%" style="border-width: 0;">
+                
+                </td>
+                <td width="30%" style="border-width: 0;">
+                  <center>
+                  <strong>     
+                      <span t-field="res_company.partner_id"
+                              t-options='{"widget": "contact", "fields": ["name","address"], "no_marker": true}'/>
+                  </strong>
+                  </center>          
+                </td>
+              </tr>
+            </table><!-- End to logo table-->
 
-<div class="row">
-<!-- Top -->
-<div class="col-3">
+            <table width="100%" style="margin-top: 1px;border-width: 0;">
+              <tr>
+                <td width="30%" style="border-width: 0;">
+                  <t t-if="o.name">
+                      <strong>
+                      <span style="margin-left: 1px;margin-right: 7px;">
+                      No.:
+                      </span>
+                      <span style="margin-left: 20px;margin-right: 20px;" t-field="o.name" />
+                      <span style="margin-left: 10px;margin-right: 40px;float:right">
+                      :م
+                      </span> 
+                      </strong>               
+                  </t>  
+                  <br />
+                  <t t-if="o.date">
+                      <strong>
+                      <span style="margin-left: 1px;margin-right: 1px;">
+                      Date:
+                      </span>
+                      <span style="margin-left: 20px;margin-right: 20px;" t-field="o.date" />
+                      <span style="margin-left: 10px;margin-right: 40px;float:right">
+                      :التاريخ
+                      </span>                     
+                      </strong>
+                  </t>
+                </td>
+                <td width="40%" style="border-width: 0;">
+                    <h2>
+                      <t t-if="o.payment_type=='outbound'">
+                      <center>
+                          <strong>سند صرف
+                          <br />
+                          Payment Voucher
+                          </strong>
+                          <br />
+                          <h5> =================== </h5>
+                      </center>
+                      </t>
+                      <t t-if="o.payment_type=='inbound'">
+                      <center>
+                          <strong>سند قبض
+                          <br />
+                          Receipt Voucher
+                          </strong>
+                          <br />
+                          <h5> =================== </h5>
+                    </center>
+                      </t>
+                  </h2>                
+                </td>
+                <td width="30%" style="border-spacing: 10px 5px;border-width: 0;">
+                    <center>
+                    <strong>
+                        Amount
+                        <br />
+                            <span t-field="o.amount" />
+                            <br />
+                            المبلغ
+                    </strong>
+                    </center>
+                </td>
+              </tr>
+            </table><!-- End to header table-->            
+            <table width="100%" style="margin-bottom: 1px;border-width: 0;">
+              <tr style="border-bottom:  1px solid grey; border-color: rgb(240, 240, 240);">
+                <td width="25%" style="border-width: 0;">
+                  <t t-if="o.payment_type=='inbound'">
+                    <div class="">We received from Mr./Ms.</div>
+                  </t>
+                  <t t-if="o.payment_type=='outbound'">
+                    <div class="">Paid to Mr./Ms.</div>
+                  </t>                
+                </td>
+                <td width="50%" style="border-width: 0;">
+                    <center>
+                    <strong>
+                        <span t-field="o.partner_id.name" />
+                    </strong>
+                    </center>                
+                </td>
+                <td width="25%" style="border-width: 0;">
+                    <t t-if="o.payment_type=='inbound'">
+                      <div style="text-align:right">استلمنا من السيد / السادة</div>
+                    </t>
+                    <t t-if="o.payment_type=='outbound'">
+                      <div style="text-align:right"> دفع الي السيد / السادة</div>
+                    </t>                
+                </td>                                
+              </tr>
+              <tr style="border-bottom:  1px solid grey; border-color: rgb(240, 240, 240);">
+                <td width="25%" style="border-width: 0;">
+                Amount
+                </td>
+                <td width="50%" style="border-width: 0;">
+                  <center>
+                  <strong>
+                          <span style="text-align:right" t-esc="o.currency_id.amount_to_text(o.amount)" />
+                          <br />
+                          <span  style="text-align:right" t-esc="o._num2words(o.amount, 'ar_001')"/>
+                  </strong>
+                  </center>                  
+                </td>
+                <td width="25%" style="border-width: 0;">
+                 <div  style="text-align:right">مبلغ و قدرة</div>
+                </td>
+              </tr>
+              <tr style="border-bottom:  1px solid grey; border-color: rgb(240, 240, 240);">
+                <td width="25%" style="border-width: 0;">
+                Paid through
+                </td>
+                <td width="50%" style="border-width: 0;">
+                  <center>
+                          <strong>
+                              <span t-field="o.journal_id" />
+                          </strong>
+                  </center>                 
+                </td>
+                <td width="25%" style="border-width: 0;"> 
+                  <div style="text-align:right">
+                  <span>تم الدفع من خلال</span>
+                  </div>                  
+                </td>                                       
+              </tr>
+              <tr style="border-bottom:  1px solid grey; border-color: rgb(240, 240, 240);">
+                <td width="25%" style="border-width: 0;">
+                Memo
+                </td>
+                <td width="50%" style="border-width: 0;">
+                  <center>
+                          <strong>
+                              <span style="text-align:right" t-field="o.ref" />
+                          </strong>
+                  </center> 
+                  <br />                
+                </td>
+                <td width="25%" style="border-width: 0;"> 
+                  <div style="text-align:right">
+                    <span >البيان</span>
+                  </div>                 
+                </td>                                       
+              </tr>
+              <tr>
+                <td width="33%" style="border-width: 0;">
+                  <center>
+                      <strong>
+                      المدير
+                      <br />
+                      Manager Sign.            
+                      </strong>
+                      <br /><br />
+                      -------------------------------
+                      <br /> 
+                  </center>                   
+                </td>
+                <td width="34%" style="border-width: 0;">
+                    <center>
+                        <strong>
+                        المستلم
+                        <br />
+                        Received By            
+                        </strong>
+                        <br /><br />
+                        -------------------------------
+                        <br /> 
+                    </center>  
+                </td>
+                <td width="33%" style="border-width: 0;">
+                    <center>
+                        <strong>
+                        الاعداد
+                        <br />
+                        Prepared By
+                        </strong>
+                        <br /><br />
+                        -------------------------------
+                        <br /> 
+                    </center>                    
+                </td>                                      
+              </tr>                                          
+            </table><!-- End to contant table-->
 
-            <t t-if="o.name">
-                <strong>No.:
-                <span style="float:none;text-align: center;" t-field="o.name" />
-                <span style="float:right">
-                :م
-                </span> 
-                </strong>               
-            </t>  
-    <br />
-            <t t-if="o.date">
-                <strong>
-                <span style="white-space:nowrap;">
-                Date:
-                </span>
-                    <span style="float:center" t-field="o.date" />
-                <span style="float:right">
-                :التاريخ
-                </span>                     
-                </strong>
-            </t>
-  </div>
-  <div class="col-6">
-                              <h2>
-                                <t t-if="o.payment_type=='outbound'">
-                                <center>
-                                    <strong>سند صرف
-                                    <br />
-                                    Payment Voucher
-                                    </strong>
-                                    <br />
-                                    <h5> =================== </h5>
-                                </center>
-                                </t>
-                                <t t-if="o.payment_type=='inbound'">
-                                <center>
-                                    <strong>سند قبض
-                                    <br />
-                                    Receipt Voucher
-                                    </strong>
-                                    <br />
-                                    <h5> =================== </h5>
-                              </center>
-                                </t>
-                            </h2>
-  </div>
+            <table width="100%" style="margin-top: 50px;">
+              <tr>
+                <td style="border-top:  1px solid black;"></td>
+              </tr>
+            </table> <!-- End to footer table-->           
 
-  <div class="col-3">
+            </div><!-- End page row -->
+            
+            </div><!-- End page Div -->
 
-    <center>
-    <strong>
-        Amount
-        <br />
-            <span t-field="o.amount" />
-             <br />
-            المبلغ
-    </strong>
-    </center>
-  </div>
+     <p style="page-break-after:always;">   </p>       
 
-<!-- End Top -->
-
-</div><!-- End col-12 -->
-
-<div class="row" style="border-bottom:  1px solid grey; border-color: rgb(240, 240, 240);">
-
-<t t-if="o.payment_type=='inbound'">
-  <div class="col-3">We received from Mr./Ms.</div>
-</t>
-<t t-if="o.payment_type=='outbound'">
-  <div class="col-3">Paid to Mr./Ms.</div>
-</t>
-
-  <div class="col-6">
-                            <center>
-                            <strong>
-                                <span t-field="o.partner_id.name" />
-                            </strong>
-                            </center>
-  </div>
-<t t-if="o.payment_type=='inbound'">
-  <div class="col-3"  style="text-align:right">استلمنا من السيد / السادة</div>
-</t>
-<t t-if="o.payment_type=='outbound'">
-  <div class="col-3"  style="text-align:right"> دفع الي السيد / السادة</div>
-</t>
-</div>
-
-<div class="row" style="border-bottom:  1px solid grey; border-color: rgb(240, 240, 240);">
-  <div class="col-3">Amount</div>
-  <div class="col-6">
-            <center>
-            <strong>
-                    <span style="text-align:right" t-esc="o.currency_id.amount_to_text(o.amount)" />
-                    <br />
-                    <span  style="text-align:right" t-esc="o._num2words(o.amount, 'ar_001')"/>
-            </strong>
-            </center>  
-  </div>
-
-    <div class="col-3" style="text-align:right">مبلغ و قدرة</div>
-</div>
-
-<div class="row" style="border-bottom:  1px solid grey; border-color: rgb(240, 240, 240);">
-  <div class="col-3">Paid through</div>
-  <div class="col-6">
-        <center>
-                <strong>
-                    <span t-field="o.journal_id" />
-                </strong>
-        </center> 
-  </div>
-
-  <div class="col-3" style="text-align:right">
-  <span >تم الدفع من خلال</span>
-  </div>  
-</div>
-
-<div class="row" style="border-bottom:  1px solid grey; border-color: rgb(240, 240, 240);">
-  <div class="col-3">Memo</div>
-  <div class="col-6">
-        <center>
-                <strong>
-                    <span style="text-align:right" t-field="o_sec.ref" />
-                </strong>
-        </center> 
-        <br />
-  </div>
-
-  <div class="col-3" style="text-align:right">
-  <span >البيان</span>
-  </div>  
-</div>
-
-<div class="row">
-  <div class="col-3">
-        <center>
-            <strong>
-             المدير
-            <br />
-            Manager Sign.            
-            </strong>
-            <br /><br />
-            -------------------------------
-             <br /> 
-        </center>    
-  
-  </div>
-  <div class="col-6">
-        <center>
-            <strong>
-             المستلم
-            <br />
-            Received By            
-            </strong>
-            <br /><br />
-            -------------------------------
-             <br /> 
-        </center>    
-  </div>
-  <div class="col-3">
-        <center>
-            <strong>
-            الاعداد
-            <br />
-            Prepared By
-            </strong>
-            <br /><br />
-            -------------------------------
-             <br /> 
-        </center>    
-  </div>
-</div>
-
-<table width="100%" style="margin-top: 50px;">
-  <tr>
-    <td style="border-top:  1px solid black;"></td>
-  </tr>
- </table>
-
-</div>
-
-</div>
-
-<p style="page-break-after:always;">   </p>
-        </t>
+    </t>
     </t>
     </template>
 
     <template id="report_payment_receipt">
-        <t t-call="web.html_container">
-      <t t-foreach="docs" t-as="o">
-
-        <t t-set="lang" t-value="o.partner_id.lang" />
-        <t t-call="msl_payment_receipt.report_payment_receipt_document" t-lang="lang" />
+      <t t-call="web.html_container">
+        <t t-call="msl_payment_receipt.report_payment_receipt_document" />
       </t>
-        </t>
     </template>
 
 </odoo>
