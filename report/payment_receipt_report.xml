@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="report_payment_receipt_document">
-    <t t-call="web.external_layout">
+    <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
             <div class="page">
             <div class="row">
@@ -11,9 +11,8 @@
               <tr>
                 <td width="30%" style="border-width: 0;">
                   <center>
-                      <img src='/web/binary/company_logo' class="float-right" style="max-height: 80px; margin-top:5px;"
-                              alt="Logo"/>
-                  </center>                        
+                      <img t-if="res_company.logo" t-att-src="image_data_uri(res_company.logo)" class="float-right" style="max-height: 80px; margin-top:5px;" alt="Logo"/>
+                  </center>                       
          
                 </td>
                 <td width="40%" style="border-width: 0;">
@@ -34,49 +33,47 @@
               <tr>
                 <td width="30%" style="border-width: 0;">
                   <t t-if="o.name">
-                      <strong>
-                      <span style="margin-left: 1px;margin-right: 7px;">
+                      
+                      <span style="margin-left: 1px;margin-right: 3px;">
                       No.:
                       </span>
-                      <span style="margin-left: 20px;margin-right: 20px;" t-field="o.name" />
-                      <span style="margin-left: 10px;margin-right: 40px;float:right">
+                      <span style="margin-left: 3px;margin-right: 1px;" t-field="o.name"/>
+                      <span style="margin-left: 1px;margin-right: 10px;float:right">
                       :م
                       </span> 
-                      </strong>               
+                                  
                   </t>  
-                  <br />
+                  <br/>
                   <t t-if="o.date">
-                      <strong>
+                      
                       <span style="margin-left: 1px;margin-right: 1px;">
                       Date:
                       </span>
-                      <span style="margin-left: 20px;margin-right: 20px;" t-field="o.date" />
-                      <span style="margin-left: 10px;margin-right: 40px;float:right">
+                      <span style="margin-left: 3px;margin-right: 1px;" t-field="o.date"/>
+                      <span style="margin-left: 1px;margin-right: 10px;float:right">
                       :التاريخ
                       </span>                     
-                      </strong>
+                      
                   </t>
                 </td>
-                <td width="40%" style="border-width: 0;">
+                <td width="40%" style="border-width: 0; font-family: 'Montserrat, sans-serif';">
                     <h2>
                       <t t-if="o.payment_type=='outbound'">
                       <center>
                           <strong>سند صرف
-                          <br />
+                          <br/>
                           Payment Voucher
                           </strong>
-                          <br />
-                          <h5> =================== </h5>
+                          <h6> ===================</h6>
                       </center>
                       </t>
                       <t t-if="o.payment_type=='inbound'">
                       <center>
                           <strong>سند قبض
-                          <br />
+                          <br/>
                           Receipt Voucher
                           </strong>
-                          <br />
-                          <h5> =================== </h5>
+                          <h6> ===================</h6>
                     </center>
                       </t>
                   </h2>                
@@ -85,15 +82,16 @@
                     <center>
                     <strong>
                         Amount
-                        <br />
-                            <span t-field="o.amount" />
-                            <br />
+                        <br/>
+                            <span t-field="o.amount"/>
+                            <br/>
                             المبلغ
                     </strong>
                     </center>
                 </td>
               </tr>
-            </table><!-- End to header table-->            
+            </table><!-- End to header table--> 
+
             <table width="100%" style="margin-bottom: 1px;border-width: 0;">
               <tr style="border-bottom:  1px solid grey; border-color: rgb(240, 240, 240);">
                 <td width="25%" style="border-width: 0;">
